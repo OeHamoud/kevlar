@@ -21,6 +21,7 @@ chosen =multiselect(
      "Automatic system updates",
      ],
     preselected=[0],    # indices to pre-check
+    groups=[[3,4]]
 )
 
 #server update & autoremove

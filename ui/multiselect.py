@@ -51,14 +51,33 @@ def _draw(items, selected, cursor):
     sys.stdout.flush()
 
 
-def multiselect(options, *, preselected=None, max_select=0):
+def multiselect(options, *, preselected=None, max_select=0, groups=None):
     """
     Show an interactive checkbox menu. Returns list of selected strings.
 
     options      – list of strings to display
     preselected  – list of indices to pre-check  (default: none)
     max_select   – max items allowed; 0 = unlimited
+    groups       – list of index lists that are mutually exclusive
+                   e.g. [[0, 1]] means picking A deselects B and vice versa
+                   e.g. [[0, 1], [2, 3]] for two separate exclusive pairs
     """
+    # build a lookup: index -> its exclusive group
+    group_map = {}
+    for group in (groups or []):
+        for idx in group:
+            group_map[idx] = group
+
+    def toggle(cursor, selected):
+        if cursor in selected:
+            selected.discard(cursor)
+        else:
+            # deselect any sibling in the same exclusive group first
+            for sibling in group_map.get(cursor, []):
+                selected.discard(sibling)
+            if max_select == 0 or len(selected) < max_select:
+                selected.add(cursor)
+
     selected, cursor = set(preselected or []), 0
     sys.stdout.write("\n" * (len(options) + 2))
 
@@ -67,11 +86,10 @@ def multiselect(options, *, preselected=None, max_select=0):
         key = _read_key()
         if   key in KEYS_UP:     cursor = (cursor - 1) % len(options)
         elif key in KEYS_DOWN:   cursor = (cursor + 1) % len(options)
-        elif key in KEYS_TOGGLE:
-            if cursor in selected: selected.discard(cursor)
-            elif max_select == 0 or len(selected) < max_select: selected.add(cursor)
+        elif key in KEYS_TOGGLE: toggle(cursor, selected)
         elif key in KEYS_ALL:
-            selected = set() if len(selected) == len(options) else set(range(len(options)))
+            free = {i for i in range(len(options)) if i not in group_map}
+            selected = set() if selected >= free else free
         elif key in KEYS_DONE:   break
         elif key in KEYS_QUIT:   return []
         _draw(options, selected, cursor)
@@ -79,13 +97,3 @@ def multiselect(options, *, preselected=None, max_select=0):
     print()
     return [options[i] for i in sorted(selected)]
 
-
-# ── Demo ────────────────────────────────────────────────────────────────────
-
-if __name__ == "__main__":
-    result = multiselect(
-        ["Apple", "Banana", "Cherry", "Mango", "Pineapple"],
-        preselected=[0],
-        max_select=3,
-    )
-    print("Selected:", result)
