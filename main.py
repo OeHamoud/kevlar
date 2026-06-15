@@ -1,6 +1,6 @@
 from ui.banner import welcome
 from ui.multiselect import multiselect
-from klibraries import apparmor_enforce, auditd_setup, permissions_hardening, security_probe as sp, service_pruning, ssh_hardening, sysctl_hardening, time_sync
+from klibraries import apparmor_enforce, auditd_setup, permissions_hardening, restart, security_probe as sp, service_pruning, ssh_hardening, sysctl_hardening, time_sync
 from klibraries import system_update
 from klibraries import selinux_setup
 from klibraries import ufw_setup
@@ -8,6 +8,9 @@ from klibraries import unnecessary_packages
 from klibraries import ssh_allowlist
 from klibraries import fail2ban_setup
 from klibraries import automatic_updates
+
+
+require_restart = False
 
 #Kevlar banner
 welcome()
@@ -47,6 +50,7 @@ if "Remove Unnecessary Packages" in chosen:
 
 if "SELinux Setup" in chosen:
     selinux_setup.install()
+    require_restart = True
 
 if "AppArmor Enforce" in chosen:
     apparmor_enforce.enable()
@@ -83,3 +87,6 @@ if "Time Sync Hardening" in chosen:
 
 if "Permissions Hardening" in chosen:
     permissions_hardening.apply()
+
+if "RESTART DEVICE" in chosen:
+    restart.reboot()

@@ -43,8 +43,8 @@ def webserver_install():
     os.system("sudo ufw limit 22/tcp")
 
     print("Webserver config")
-    os.system("ufw allow 80/tcp")
-    os.system("ufw allow 443/tcp")
+    os.system("sudo ufw allow 80/tcp")
+    os.system("sudo ufw allow 443/tcp")
 
     print("enabling ufw")
     os.system("sudo ufw enable")
