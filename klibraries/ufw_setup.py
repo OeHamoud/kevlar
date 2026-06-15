@@ -47,7 +47,7 @@ def webserver_install():
     os.system("ufw allow 443/tcp")
 
     print("enabling ufw")
-    os.system("sudo ufw enable -y")
+    os.system("sudo ufw enable")
 
     print("status")
     os.system("sudo ufw status verbose")
