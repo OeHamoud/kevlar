@@ -10,8 +10,6 @@ from klibraries import fail2ban_setup
 from klibraries import automatic_updates
 
 
-require_restart = False
-
 #Kevlar banner
 welcome()
 
