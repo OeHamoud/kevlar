@@ -16,7 +16,7 @@ chosen =multiselect(
     preselected=[0],    # indices to pre-check
 )
 
-
+# test
 #server update & autoremove
 if "Full System Update & autoremove" in chosen:
     system_update.update()
