@@ -8,6 +8,7 @@ def apply():
         os.system("sudo apt update")
         os.system("sudo apt install -y chrony")
 
+    os.system("sudo chronyc makestep")
     os.system("sudo systemctl enable --now chrony")
     os.system("chronyc tracking")
     print("\033[92m✔\033[0m Time Sync")

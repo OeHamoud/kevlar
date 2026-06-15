@@ -36,6 +36,7 @@ chosen =multiselect(
         "Service Pruning",
         "Time Sync Hardening",
         "Permissions Hardening",
+        "RESTART DEVICE"
     ],
     groups=[[4, 5], [2,3]]
 )
