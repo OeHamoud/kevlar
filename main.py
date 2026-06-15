@@ -4,30 +4,30 @@ from ui.banner import welcome
 from ui.multiselect import multiselect
 from klibraries import security_probe as sp
 from klibraries import system_update
+from klibraries import selinux_setup
+from klibraries import ufw_setup
 
 #Kevlar banner
 welcome()
 
 #option menu
 chosen =multiselect(
-    ["Option A", "Option B", "Option C"],
+    ["Full System Update & autoremove", "SELinux Setup", "Default ufw setup", "Webserver ufw setup"],
     preselected=[0],    # indices to pre-check
 )
 
-print(chosen)  # ['Option A', 'Option C']
 
+#server update & autoremove
+if "Full System Update & autoremove" in chosen:
+    system_update.update()
 
-#server update & upgrade
-system_update.update()
-
+#SELinux setup
+if "SELinux Setup" in chosen:
+    selinux_setup.install()
 
 #UFW setup
-print("Installing UFW")
-os.system("sudo apt-get install ufw")
+if "Default ufw setup" in chosen:
+    ufw_setup.default_install()
 
-#Optionnal for debain based Distros install SELinux
-
-if sp.is_apparmor_active():
-    print("AppArmor active")
-else:
-    print("no")
+if "Webserver ufw setup" in chosen:
+    ufw_setup.webserver_install()
