@@ -4,4 +4,4 @@
 import os
 def update():
     os.system("sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean")
-    print("✅ Full system update Done")
+    print("\033[92m✔\033[0m Full system update Done")

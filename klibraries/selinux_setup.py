@@ -20,11 +20,12 @@ def install():
 
     print("Disabling AppArmor...")
 
-    os.system("systemctl disable --now apparmor || true")
+    os.system("sudo systemctl disable --now apparmor || true")
 
     print("Activating SELinux")
 
     print("selinux-activate")
+    print("\033[92m✔\033[0m SELinux Installed")
 
     if sp.is_apparmor_active():
         print(f"{RED}Error:{RESET} AppArmor still active")

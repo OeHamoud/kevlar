@@ -36,7 +36,6 @@ chosen =multiselect(
         "Time Sync Hardening",
         "Permissions Hardening",
     ],
-    preselected=[0],
     groups=[[4, 5], [2,3]]
 )
 

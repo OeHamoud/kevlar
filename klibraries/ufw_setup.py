@@ -17,10 +17,12 @@ def default_install():
     os.system("sudo ufw limit 22/tcp")
 
     print("enabling ufw")
-    os.system("sudo ufw enable -y")
+    os.system("sudo ufw enable")
 
     print("status")
     os.system("sudo ufw status verbose")
+
+    print("\033[92m✔\033[0m Ufw Setup")
 
 def webserver_install():
 

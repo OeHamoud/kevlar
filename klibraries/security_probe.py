@@ -2,12 +2,12 @@ import os
 import shutil
 
 def is_apparmor_active():
-    return os.system("systemctl is-active --quiet apparmor") == 0
+    return os.system("sudo systemctl is-active --quiet apparmor") == 0
 
 def is_selinux_installed():
-    return shutil.which("sestatus") is not None
+    return shutil.which("sudo sestatus") is not None
 
 def is_selinux_enforcing():
     if not is_selinux_installed():
         return False
-    return os.system("sestatus 2>/dev/null | grep -q 'enabled'") == 0
+    return os.system("sudo sestatus 2>/dev/null | grep -q 'enabled'") == 0

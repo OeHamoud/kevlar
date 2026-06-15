@@ -2,7 +2,8 @@ import os
 
 def remove():
     print("removing unnecessary packages")
-    os.system("apt purge telnet rsh-client rsh-redone-client talk ntalk")
+    os.system("sudo apt purge telnet rsh-client rsh-redone-client talk ntalk")
 
     print("cleaning up")
-    os.system("apt autoremove --purge")
+    os.system("sudo apt autoremove --purge")
+    print("\033[92m✔\033[0m Removed unnecessary Packages")

@@ -13,3 +13,4 @@ MaxAuthTries 3
 
     os.system('echo "{}" | sudo tee -a /etc/ssh/sshd_config'.format(config.strip()))
     os.system("sudo systemctl restart ssh")
+    print("\033[92m✔\033[0m  SSH Hardening")

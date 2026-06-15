@@ -16,3 +16,5 @@ fs.protected_symlinks=1
 
     os.system('echo "{}" | sudo tee /etc/sysctl.d/99-hardening.conf'.format(config.strip()))
     os.system("sudo sysctl -p /etc/sysctl.d/99-hardening.conf")
+
+    print("\033[92m✔\033[0m Kernel Hardening")

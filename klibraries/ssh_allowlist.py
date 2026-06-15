@@ -16,4 +16,4 @@ def implement():
     print("Writing /etc/hosts.allow")
     os.system(f'echo "{allow_rules}" | sudo tee /etc/hosts.allow')
 
-    print("Done")
+    print("\033[92m✔\033[0m SSH Allowlist Configured")

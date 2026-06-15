@@ -8,9 +8,9 @@ def install():
 
     print("Creating custom SSH jail config")
 
-    config = """
-[sshd]
+    config = """[sshd]
 enabled = true
+backend = systemd
 port = ssh
 maxretry = 3
 findtime = 10m
@@ -18,7 +18,10 @@ bantime = 1h
 ignoreip = 127.0.0.1/8
 """
 
-    os.system("echo '{}' | sudo tee /etc/fail2ban/jail.d/sshd.local".format(config.strip()))
+    with open("/tmp/sshd.local", "w") as f:
+        f.write(config)
+        
+    os.system("sudo mv /tmp/sshd.local /etc/fail2ban/jail.d/sshd.local")
 
     print("Enabling service")
     os.system("sudo systemctl enable fail2ban")
@@ -26,3 +29,5 @@ ignoreip = 127.0.0.1/8
 
     print("Status")
     os.system("sudo fail2ban-client status sshd")
+
+    print("\033[92m✔\033[0m Fail2Ban Setup")
